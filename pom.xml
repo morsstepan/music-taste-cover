@@ -42,6 +42,7 @@
 			<artifactId>spotify-web-api-java</artifactId>
 			<version>${spotify.web.api.java}</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
