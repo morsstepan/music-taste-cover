@@ -15,7 +15,8 @@
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>1.11</java.version>
+		<spotify.web.api.java>4.2.1</spotify.web.api.java>
 	</properties>
 
 	<dependencies>
@@ -34,6 +35,12 @@
 					<artifactId>junit-vintage-engine</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>se.michaelthelin.spotify</groupId>
+			<artifactId>spotify-web-api-java</artifactId>
+			<version>${spotify.web.api.java}</version>
 		</dependency>
 	</dependencies>
 
