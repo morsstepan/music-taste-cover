@@ -2,34 +2,54 @@ package com.morsstepan.musictastecover;
 
 import org.junit.jupiter.api.Test;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.Buffer;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ImagePlayground {
+    private static final String HARD_DAYS_NIGHT_COVER_NAME = "hard-days-night.jpg";
+    private static final String HELP_COVER_NAME = "help.jpg";
 
     @Test
     public void mergeImages() {
 
-        BufferedImage img1;
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file1 = new File(classLoader.getResource(HARD_DAYS_NIGHT_COVER_NAME).getFile());
+        File file2 = new File(classLoader.getResource(HELP_COVER_NAME).getFile());
+        try {
+            BufferedImage img1 = ImageIO.read(file1);
+            BufferedImage img2 = ImageIO.read(file2);
+            ImageIO.write(img1, "jpg", new File("111.jpg"));
+            BufferedImage fin = joinBufferedImage(img1, img2);
+            ImageIO.write(fin, "png", new File("merged.jpg"));
+            System.out.println("test");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
-    public static BufferedImage joinBufferedImage(BufferedImage img1, BufferedImage img2) {
-        //do some calculate first
-        int offset  = 5;
-        int wid = img1.getWidth()+img2.getWidth()+offset;
-        int height = Math.max(img1.getHeight(),img2.getHeight())+offset;
-        //create a new buffer and draw two image into the new image
-        BufferedImage newImage = new BufferedImage(wid,height, BufferedImage.TYPE_INT_ARGB);
+    public static BufferedImage joinBufferedImage(BufferedImage img1,
+                                                  BufferedImage img2) {
+        //int offset = 2;
+        int width = img1.getWidth();
+        int height = img1.getHeight() + img2.getHeight();
+        BufferedImage newImage = new BufferedImage(width, height,
+                BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = newImage.createGraphics();
         Color oldColor = g2.getColor();
-        //fill background
         g2.setPaint(Color.WHITE);
-        g2.fillRect(0, 0, wid, height);
-        //draw image
+        g2.fillRect(0, 0, width, height);
         g2.setColor(oldColor);
         g2.drawImage(img1, null, 0, 0);
-        g2.drawImage(img2, null, img1.getWidth()+offset, 0);
+        g2.drawImage(img2, null, 0, img1.getHeight());
         g2.dispose();
         return newImage;
     }
