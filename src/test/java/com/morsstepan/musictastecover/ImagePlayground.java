@@ -1,5 +1,7 @@
 package com.morsstepan.musictastecover;
 
+import com.morsstepan.musictastecover.image.CoverBuilder;
+import com.morsstepan.musictastecover.image.JoinDirection;
 import org.junit.jupiter.api.Test;
 
 import javax.imageio.ImageIO;
@@ -23,10 +25,11 @@ public class ImagePlayground {
         File file1 = new File(classLoader.getResource(HARD_DAYS_NIGHT_COVER_NAME).getFile());
         File file2 = new File(classLoader.getResource(HELP_COVER_NAME).getFile());
         try {
-            BufferedImage img1 = ImageIO.read(file1);
+
+//            BufferedImage img1 = ImageIO.read(file1);
+            BufferedImage img1 = ImageIO.read(new File("merged.jpg"));
             BufferedImage img2 = ImageIO.read(file2);
-            ImageIO.write(img1, "jpg", new File("111.jpg"));
-            BufferedImage fin = joinBufferedImage(img1, img2);
+            BufferedImage fin = CoverBuilder.joinImage(img1, img2, 0, JoinDirection.RIGHT);
             ImageIO.write(fin, "png", new File("merged.jpg"));
             System.out.println("test");
         } catch (IOException e) {
